@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'includes/database.php';
+require_once 'includes/functions.php';
 
 // Get product ID from URL, validate it as integer
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -91,6 +92,34 @@ $options = $stmt2->fetchAll();
   <h1><?= htmlspecialchars($product['name']) ?></h1>
   <img class="product-image" src="assets/images/products/<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" loading="lazy">
 
+   <!-- Wishlist Button -->
+<div class="wishlist-section" style="margin: 20px 0;">
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <?php if (is_in_wishlist($_SESSION['user_id'], $product['id'])): ?>
+            <form action="wishlist-action.php" method="post">
+                <input type="hidden" name="action" value="remove">
+                <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                <input type="hidden" name="redirect" value="product-detail.php?id=<?= $product['id'] ?>">
+                <button type="submit" class="btn-primary" style="background-color: #555;">
+                    <i class="fas fa-heart"></i> Remove from Wishlist
+                </button>
+            </form>
+        <?php else: ?>
+            <form action="wishlist-action.php" method="post">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                <input type="hidden" name="redirect" value="product-detail.php?id=<?= $product['id'] ?>">
+                <button type="submit" class="btn-primary">
+                    <i class="far fa-heart"></i> Add to Wishlist
+                </button>
+            </form>
+        <?php endif; ?>
+    <?php else: ?>
+        <a href="login.php?redirect=product-detail.php?id=<?= $product['id'] ?>" class="btn-primary">
+            <i class="far fa-heart"></i> Login to Add to Wishlist
+        </a>
+    <?php endif; ?>
+</div> 
   <p><strong>Category:</strong> <?= htmlspecialchars($product['category']) ?></p>
   <p><strong>Base Price:</strong> $<?= number_format($product['base_price'], 2) ?></p>
 

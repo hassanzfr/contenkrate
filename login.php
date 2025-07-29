@@ -43,7 +43,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <html>
 <head>
   <title>Login - Contenkrate</title>
-  <link rel="stylesheet" href="assets/css/youtubered-theme.css" />
+  <link rel="stylesheet" href="assets\css\youtubered-theme.css" />
 </head>
 <body>
   <div class="auth-container">
