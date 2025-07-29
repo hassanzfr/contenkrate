@@ -1,16 +1,16 @@
-<nav class="navbar">
-  <div class="logo"><a href="index.php">Contenkrate</a></div>
-  <ul class="nav-links">
-    <li><a href="products.php">Catalog</a></li>
-    <li><a href="setups.php">Setup Guides</a></li>
-    <li><a href="blog.php">Blog</a></li>
-    <li><a href="contact.php">Contact</a></li>
-    <?php if (isset($_SESSION['user_id'])): ?>
-      <li><a href="dashboard.php">Dashboard</a></li>
-      <li><a href="logout.php">Logout</a></li>
-    <?php else: ?>
-      <li><a href="login.php">Login</a></li>
-      <li><a href="register.php">Sign Up</a></li>
-    <?php endif; ?>
-  </ul>
-</nav>
+<?php
+// You can add session or user logic here later if needed
+?>
+
+<header>
+  <a href="index.php" class="logo">Contenkrate</a>
+  <nav>
+    <ul>
+      <li><a href="index.php" <?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'class="active"' : '' ?>>Home</a></li>
+      <li><a href="products.php" <?= basename($_SERVER['PHP_SELF']) === 'products.php' ? 'class="active"' : '' ?>>Products</a></li>
+      <li><a href="about.php" <?= basename($_SERVER['PHP_SELF']) === 'about.php' ? 'class="active"' : '' ?>>About</a></li>
+      <li><a href="contact.php" <?= basename($_SERVER['PHP_SELF']) === 'contact.php' ? 'class="active"' : '' ?>>Contact</a></li>
+      <li><a href="review.php" <?= basename($_SERVER['PHP_SELF']) === 'review.php' ? 'class="active"' : '' ?>>Reviews</a></li>
+    </ul>
+  </nav>
+</header>

@@ -14,7 +14,6 @@ require_once 'includes/database.php';
 <body>
   <?php include 'includes/navbar.php'; ?>
 
-// Hero
     <section class="hero">
     <div class="hero-content">
       <h1>Welcome to Contenkrate</h1>
@@ -23,7 +22,6 @@ require_once 'includes/database.php';
     </div>
   </section>
 
-// Featured Products Section
     <section class="featured-products">
     <h2>Featured Products</h2>
     <div class="product-grid">
@@ -44,7 +42,6 @@ require_once 'includes/database.php';
     </div>
   </section>
 
-// Close
     <?php include 'includes/footer.php'; ?>
 </body>
 </html>
