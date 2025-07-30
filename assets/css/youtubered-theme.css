@@ -49,7 +49,7 @@ a:hover { color: #FF4444; }
   display: flex;
   gap: 40px;
   padding: 40px;
-  align-items: flex-start;
+  align-items:flex-start
 }
 
 .option-list {
@@ -71,17 +71,18 @@ header {
   background-color: #1C1C1C;
   padding: 15px 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content:right ;
   align-items: center;
   color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.5);
   position: sticky;
   top: 0;
   z-index: 1000;
+  height: 50px;
 }
 
 header .logo {
-  font-size: 1.8rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #FF0000;
   text-decoration: none;
@@ -1486,4 +1487,39 @@ main.container ul li:before {
 
 .admin-table td.actions {
     text-align: center;
+}
+
+header .logo img {
+  height: 50px;
+  transform: translateY(0px); /* Makes it pop out a bit */
+}
+
+
+.floating-logo {
+  position: absolute;
+  top: 50px;
+  left: 70px;
+  z-index: 1100;
+  display: block;
+}
+
+.floating-logo img {
+  height: 120px;
+  transform: translateY(-30%);
+  pointer-events: auto;
+}
+
+
+/* Sticky mini logo (hidden by default) */
+.sticky-logo {
+  display: none;
+}
+
+.sticky-logo img {
+  height: 40px;
+}
+
+/* Show it after scroll */
+header.scrolled .sticky-logo {
+  display: block;
 }

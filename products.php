@@ -45,6 +45,10 @@ $sql .= " ORDER BY created_at DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Image settings
+$image_dir = 'assets/images/products/';
+$allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
 ?>
 
 <!DOCTYPE html>
@@ -169,18 +173,22 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="product-grid">
     <?php if (count($products) > 0): ?>
       <?php foreach ($products as $product):
-          // Determine image path or fallback placeholder
-          $image_path = 'assets/images/placeholder.png'; // default placeholder
-
-          if (!empty($product['image_url'])) {
-              $product_image_path = __DIR__ . '/assets/images/products/' . $product['image_url'];
-              if (file_exists($product_image_path)) {
-                  $image_path = 'assets/images/products/' . htmlspecialchars($product['image_url']);
+          // Find product image by ID
+          $image_path = 'assets/images/placeholder.png'; // default fallback
+          
+          foreach ($allowed_extensions as $ext) {
+              $potential_path = $image_dir . $product['id'] . '.' . $ext;
+              if (file_exists($potential_path)) {
+                  $image_path = $potential_path;
+                  break;
               }
           }
       ?>
         <div class="product-card">
-          <img src="<?= $image_path ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="800px" height="800px">
+          <img src="<?= $image_path ?>" 
+               alt="<?= htmlspecialchars($product['name']) ?>"
+               width="800"
+               height="800">
           <h3><?= htmlspecialchars($product['name']) ?></h3>
           <p>Category: <?= htmlspecialchars($product['category']) ?></p>
           <p>From $<?= number_format($product['base_price'], 2) ?></p>

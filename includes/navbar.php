@@ -2,8 +2,9 @@
 // Allowed themes
 $allowed_themes = ['youtubered', 'instapink', 'tiktokcyan'];
 
-// Set theme if in GET and valid
-if (isset($_GET['theme']) && in_array($_GET['theme'], $allowed_themes)) {
+// Set theme if in GET and valid (admin only)
+if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin' && 
+    isset($_GET['theme']) && in_array($_GET['theme'], $allowed_themes)) {
     $_SESSION['theme'] = $_GET['theme'];
 }
 
@@ -11,7 +12,10 @@ if (isset($_GET['theme']) && in_array($_GET['theme'], $allowed_themes)) {
 $current_theme = $_SESSION['theme'] ?? 'youtubered';
 ?>
 <header>
-  <a href="index.php" class="logo">Contenkrate</a>
+    <a href="index.php" class="sticky-logo">
+      <img src="/path/to/contentkrate-high-resolution-logo-transparent.png" alt="Contenkrate Small Logo">
+    </a>
+
   <nav>
     <ul>
       <li><a href="index.php" <?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'class="active"' : '' ?>>Home</a></li>
@@ -32,21 +36,37 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
     </ul>
   </nav>
 
-  <div class="theme-switcher">
-    <label for="themeSelect" style="color: white; margin-right: 8px;">Theme:</label>
-    <select id="themeSelect" style="padding: 5px; border-radius: 4px;">
-      <option value="youtubered" <?= $current_theme === 'youtubered' ? 'selected' : '' ?>>YouTube Red</option>
-      <option value="instapink" <?= $current_theme === 'instapink' ? 'selected' : '' ?>>Instagram Pink</option>
-      <option value="tiktokcyan" <?= $current_theme === 'tiktokcyan' ? 'selected' : '' ?>>TikTok Cyan</option>
-    </select>
-  </div>
+  <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+    <div class="theme-switcher">
+      <label for="themeSelect" style="color: white; margin-right: 8px;">Theme:</label>
+      <select id="themeSelect" style="padding: 5px; border-radius: 4px;">
+        <option value="youtubered" <?= $current_theme === 'youtubered' ? 'selected' : '' ?>>YouTube Red</option>
+        <option value="instapink" <?= $current_theme === 'instapink' ? 'selected' : '' ?>>Instagram Pink</option>
+        <option value="tiktokcyan" <?= $current_theme === 'tiktokcyan' ? 'selected' : '' ?>>TikTok Cyan</option>
+      </select>
+    </div>
+    <script>
+    document.getElementById('themeSelect').addEventListener('change', function() {
+      const selectedTheme = this.value;
+      const params = new URLSearchParams(window.location.search);
+      params.set('theme', selectedTheme);
+      window.location.search = params.toString();
+    });
+    </script>
+  <?php endif; ?>
 </header>
 
+<a href="index.php" class="floating-logo">
+  <img src="assets\images\contentkrate-high-resolution-logo-transparent.png" alt="Contenkrate Logo">
+</a>
+
 <script>
-document.getElementById('themeSelect').addEventListener('change', function() {
-  const selectedTheme = this.value;
-  const params = new URLSearchParams(window.location.search);
-  params.set('theme', selectedTheme);
-  window.location.search = params.toString();
-});
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
 </script>
