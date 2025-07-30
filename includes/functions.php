@@ -54,3 +54,39 @@ function is_in_wishlist($user_id, $product_id) {
     $stmt->execute([$user_id, $product_id]);
     return (bool)$stmt->fetch();
 }
+
+// Add these to your existing functions.php
+
+function is_admin() {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+}
+
+function redirect_if_not_admin() {
+    if (!is_admin()) {
+        header("Location: index.php");
+        exit();
+    }
+}
+
+function get_all_users() {
+    global $pdo;
+    $stmt = $pdo->query("SELECT id, username, email, created_at FROM users ORDER BY created_at DESC");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_user_details($user_id) {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function get_site_analytics() {
+    global $pdo;
+    return [
+        'total_users' => $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn(),
+        'total_products' => $pdo->query("SELECT COUNT(*) FROM products")->fetchColumn(),
+        'total_orders' => $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn(),
+        'recent_orders' => $pdo->query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC)
+    ];
+}

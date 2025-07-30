@@ -21,11 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_type'] = $user['user_type'];
+                $_SESSION['user_role'] = $user['user_type']; // For admin functions
                 
                 $stmt = $pdo->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
                 $stmt->execute([$user['id']]);
                 
-                header("Location: index.php");
+                // Redirect admin to dashboard
+                if ($user['user_type'] === 'admin') {
+                    header("Location: admin/dashboard.php");
+                } else {
+                    header("Location: index.php");
+                }
                 exit;
             } else {
                 $errors[] = "Invalid credentials or account inactive.";
@@ -43,7 +49,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <html>
 <head>
   <title>Login - Contenkrate</title>
-  <link rel="stylesheet" href="assets\css\youtubered-theme.css" />
+  <link rel="stylesheet" href="assets/css/youtubered-theme.css" />
 </head>
 <body>
   <div class="auth-container">

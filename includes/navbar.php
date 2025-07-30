@@ -20,6 +20,9 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
       <li><a href="contact.php" <?= basename($_SERVER['PHP_SELF']) === 'contact.php' ? 'class="active"' : '' ?>>Contact</a></li>
       <li><a href="review.php" <?= basename($_SERVER['PHP_SELF']) === 'review.php' ? 'class="active"' : '' ?>>Reviews</a></li>
       <?php if (isset($_SESSION['user_id'])): ?>
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+          <li><a href="admin/dashboard.php" <?= strpos($_SERVER['PHP_SELF'], 'admin/') !== false ? 'class="active"' : '' ?>>Admin</a></li>
+        <?php endif; ?>
         <li><a href="profile.php" <?= basename($_SERVER['PHP_SELF']) === 'profile.php' ? 'class="active"' : '' ?>>Profile</a></li>
         <li><a href="logout.php">Logout</a></li>
       <?php else: ?>
@@ -28,4 +31,22 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
       <?php endif; ?>
     </ul>
   </nav>
+
+  <div class="theme-switcher">
+    <label for="themeSelect" style="color: white; margin-right: 8px;">Theme:</label>
+    <select id="themeSelect" style="padding: 5px; border-radius: 4px;">
+      <option value="youtubered" <?= $current_theme === 'youtubered' ? 'selected' : '' ?>>YouTube Red</option>
+      <option value="instapink" <?= $current_theme === 'instapink' ? 'selected' : '' ?>>Instagram Pink</option>
+      <option value="tiktokcyan" <?= $current_theme === 'tiktokcyan' ? 'selected' : '' ?>>TikTok Cyan</option>
+    </select>
+  </div>
 </header>
+
+<script>
+document.getElementById('themeSelect').addEventListener('change', function() {
+  const selectedTheme = this.value;
+  const params = new URLSearchParams(window.location.search);
+  params.set('theme', selectedTheme);
+  window.location.search = params.toString();
+});
+</script>
