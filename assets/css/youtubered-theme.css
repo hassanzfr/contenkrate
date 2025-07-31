@@ -8,7 +8,7 @@
   --text-secondary: #ddd;
   --text-tertiary: #aaa;
   --accent-red: #4384a6;
-  --accent-red-light: #FF4444;
+  --accent-red-light: #2b576e;
   --accent-green: #4CAF50;
   --border-dark: #333;
   --font-primary: sans-serif, 'Open Sans', 'Segoe UI', system-ui, sans-serif;
@@ -1791,4 +1791,96 @@ header.scrolled {
 }
 .product-details-spec-name {
   font-weight: bold;
+}
+.about-page-container {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  padding: 20px;
+  min-height: 80vh;
+  text-align: left;
+}
+
+/* Content fills container width */
+.about-page-content {
+  width: 100%;
+}
+
+/* All headings use the red accent and left align */
+.about-page-title,
+.about-page-features-title {
+  color: var(--accent-red);
+  text-align: left;
+  margin-left: 0;
+}
+
+/* Specific heading sizes */
+.about-page-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.about-page-features-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--accent-red);
+  padding-bottom: 0.4rem;
+  max-width: fit-content;
+  margin-left: 0;
+}
+
+/* Paragraphs left aligned */
+.about-page-intro,
+.about-page-mission-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+/* Features list left aligned and limited width */
+.about-page-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 600px;
+}
+
+/* Feature items */
+.about-page-feature-item {
+  font-size: 1.1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-dark);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.about-page-feature-item:last-child {
+  border-bottom: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .about-page-title {
+    font-size: 2rem;
+  }
+
+  .about-page-features-title {
+    font-size: 1.5rem;
+  }
+
+  .about-page-intro,
+  .about-page-mission-text,
+  .about-page-feature-item {
+    font-size: 1rem;
+  }
+
+  .about-page-features-list {
+    max-width: 100%;
+  }
 }
