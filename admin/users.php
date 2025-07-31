@@ -67,8 +67,7 @@ $users = get_all_users();
                     <td><?= date('M j, Y', strtotime($user['created_at'])) ?></td>
                     <td><?= ucfirst($user['user_type'] ?? 'user') ?></td>
                     <td class="actions">
-                        <a href="user-edit.php?id=<?= $user['id'] ?>" class="btn-small"><i class="fas fa-edit"></i></a>
-                        <a href="users.php?delete=<?= $user['id'] ?>" class="btn-small btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">
+                         <a href="users.php?delete=<?= $user['id'] ?>" class="btn-small btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">
                             <i class="fas fa-trash"></i>
                         </a>
                     </td>

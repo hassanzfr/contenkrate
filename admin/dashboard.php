@@ -32,38 +32,9 @@ $analytics = get_site_analytics();
                 <p><?= $analytics['total_products'] ?></p>
                 <i class="fas fa-box-open fa-2x"></i>
             </div>
-            <div class="stat-card">
-                <h3>Total Orders</h3>
-                <p><?= $analytics['total_orders'] ?></p>
-                <i class="fas fa-shopping-cart fa-2x"></i>
-            </div>
         </div>
         
-        <div class="recent-orders">
-            <h2>Recent Orders</h2>
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Order #</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($analytics['recent_orders'] as $order): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($order['order_number']) ?></td>
-                        <td><?= date('M j, Y', strtotime($order['created_at'])) ?></td>
-                        <td>$<?= number_format($order['total_amount'], 2) ?></td>
-                        <td><?= ucfirst($order['status']) ?></td>
-                        <td><a href="order-details.php?id=<?= $order['id'] ?>" class="btn-small">View</a></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+       
     </div>
     
     <?php include '../includes/footer.php'; ?>

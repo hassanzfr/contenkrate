@@ -70,7 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_wishlist'])) {
       <div class="wishlist-grid">
         <?php foreach ($wishlist_items as $item): ?>
           <div class="wishlist-item">
-            <img src="assets/images/products/<?= htmlspecialchars($item['image_url'] ?? 'placeholder.png') ?>" alt="<?= htmlspecialchars($item['name']) ?>">
             <div class="wishlist-item-content">
               <h3><?= htmlspecialchars($item['name']) ?></h3>
               <p>$<?= number_format($item['base_price'], 2) ?></p>

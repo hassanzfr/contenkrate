@@ -18,8 +18,8 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
-// Fetch all products
-$stmt = $pdo->query("SELECT * FROM products ORDER BY created_at DESC");
+// Fetch all products ordered by ID descending
+$stmt = $pdo->query("SELECT * FROM products ORDER BY id DESC");
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -65,7 +65,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($product['name']) ?></td>
                     <td><?= ucfirst($product['category']) ?></td>
                     <td>$<?= number_format($product['base_price'], 2) ?></td>
-                    <td><?= $product['is_featured'] ? 'Yes' : 'No' ?></td>
+                    <td data-featured="<?= $product['is_featured'] ?>"><?= $product['is_featured'] ? 'Yes' : 'No' ?></td>
                     <td class="actions">
                         <a href="product-edit.php?id=<?= $product['id'] ?>" class="btn-small"><i class="fas fa-edit"></i></a>
                         <a href="products.php?delete=<?= $product['id'] ?>" class="btn-small btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>

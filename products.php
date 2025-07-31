@@ -57,99 +57,15 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
   <meta charset="UTF-8" />
   <title>All Products - Contenkrate</title>
   <link rel="stylesheet" href="assets/css/youtubered-theme.css" />
-  <style>
-    /* Inline CSS for filter form and product grid */
-    body {
-      background-color: #0F0F0F;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-    }
-    .filter-form {
-      padding: 20px;
-      background: #1C1C1C;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-    .filter-form label {
-      margin-right: 5px;
-      white-space: nowrap;
-    }
-    .filter-form input[type="text"],
-    .filter-form input[type="number"],
-    .filter-form select {
-      padding: 6px 10px;
-      border: none;
-      border-radius: 4px;
-      background: #2D2D2D;
-      color: white;
-      min-width: 120px;
-    }
-    .filter-form button {
-      background: #FF0000;
-      border: none;
-      padding: 8px 15px;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .filter-form button:hover {
-      background: #FF4444;
-    }
-    .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding: 20px;
-      justify-content: center;
-    }
-    .product-card {
-      background: #1C1C1C;
-      border: 1px solid #2D2D2D;
-      border-radius: 8px;
-      width: 300px;
-      padding: 15px;
-      box-sizing: border-box;
-      text-align: center;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .product-card img {
-      max-width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 15px;
-      background-color: #000; /* fallback */
-    }
-    .btn-primary {
-      display: inline-block;
-      background: #FF0000;
-      color: white;
-      padding: 10px 18px;
-      text-decoration: none;
-      border-radius: 4px;
-      margin-top: 10px;
-      transition: background 0.3s;
-    }
-    .btn-primary:hover {
-      background: #FF4444;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/products.css" />
 </head>
-<body>
+<body class="products-page">
 <?php include 'includes/navbar.php'; ?>
 
 <section class="product-listing">
-  <h1 style="padding: 20px;">All Products</h1>
 
   <!-- Filter Form -->
-  <form method="GET" action="products.php" class="filter-form" aria-label="Product filters">
+  <form method="GET" action="products.php" class="products-filter-form" aria-label="Product filters">
     <label for="search">Search:</label>
     <input type="text" id="search" name="search" placeholder="Search products..." value="<?= htmlspecialchars($search) ?>">
 
@@ -170,7 +86,7 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
     <button type="submit">Filter</button>
   </form>
 
-  <div class="product-grid">
+  <div class="products-grid">
     <?php if (count($products) > 0): ?>
       <?php foreach ($products as $product):
           // Find product image by ID
@@ -184,7 +100,7 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
               }
           }
       ?>
-        <div class="product-card">
+        <div class="products-product-card">
           <img src="<?= $image_path ?>" 
                alt="<?= htmlspecialchars($product['name']) ?>"
                width="800"
@@ -192,11 +108,11 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
           <h3><?= htmlspecialchars($product['name']) ?></h3>
           <p>Category: <?= htmlspecialchars($product['category']) ?></p>
           <p>From $<?= number_format($product['base_price'], 2) ?></p>
-          <a href="product-detail.php?id=<?= $product['id'] ?>" class="btn-primary">View</a>
+          <a href="product-detail.php?id=<?= $product['id'] ?>" class="products-btn-primary">View</a>
         </div>
       <?php endforeach; ?>
     <?php else: ?>
-      <p style="text-align:center;">No products found.</p>
+      <p class="products-no-results">No products found.</p>
     <?php endif; ?>
   </div>
 </section>

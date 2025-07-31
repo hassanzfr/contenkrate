@@ -12,11 +12,16 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin' &&
 $current_theme = $_SESSION['theme'] ?? 'youtubered';
 ?>
 <header>
-    <a href="index.php" class="sticky-logo">
-      <img src="/path/to/contentkrate-high-resolution-logo-transparent.png" alt="Contenkrate Small Logo">
-    </a>
+  <h1 class="logotext">ContenKrate</h1>
 
-  <nav>
+  <!-- Mobile Menu Toggle Button -->
+  <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav id="mobileNav">
     <ul>
       <li><a href="index.php" <?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'class="active"' : '' ?>>Home</a></li>
       <li><a href="products.php" <?= basename($_SERVER['PHP_SELF']) === 'products.php' ? 'class="active"' : '' ?>>Products</a></li>
@@ -45,22 +50,51 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
         <option value="tiktokcyan" <?= $current_theme === 'tiktokcyan' ? 'selected' : '' ?>>TikTok Cyan</option>
       </select>
     </div>
-    <script>
-    document.getElementById('themeSelect').addEventListener('change', function() {
+  <?php endif; ?>
+</header>
+
+<script>
+// Mobile menu toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const mobileNav = document.getElementById('mobileNav');
+  
+  if (mobileMenuToggle && mobileNav) {
+    mobileMenuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('active');
+      mobileMenuToggle.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking on a link
+    const navLinks = mobileNav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        mobileNav.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+      });
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!mobileMenuToggle.contains(event.target) && !mobileNav.contains(event.target)) {
+        mobileNav.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+      }
+    });
+  }
+  
+  // Theme switcher functionality
+  const themeSelect = document.getElementById('themeSelect');
+  if (themeSelect) {
+    themeSelect.addEventListener('change', function() {
       const selectedTheme = this.value;
       const params = new URLSearchParams(window.location.search);
       params.set('theme', selectedTheme);
       window.location.search = params.toString();
     });
-    </script>
-  <?php endif; ?>
-</header>
-
-<a href="index.php" class="floating-logo">
-  <img src="assets\images\contentkrate-high-resolution-logo-transparent.png" alt="Contenkrate Logo">
-</a>
-
-<script>
+  }
+  
+  // Scrolled header effect
   window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
     if (window.scrollY > 100) {
@@ -69,4 +103,5 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
       header.classList.remove('scrolled');
     }
   });
+});
 </script>
