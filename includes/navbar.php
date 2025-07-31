@@ -26,8 +26,7 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
       <li><a href="index.php" <?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'class="active"' : '' ?>>Home</a></li>
       <li><a href="products.php" <?= basename($_SERVER['PHP_SELF']) === 'products.php' ? 'class="active"' : '' ?>>Products</a></li>
       <li><a href="about.php" <?= basename($_SERVER['PHP_SELF']) === 'about.php' ? 'class="active"' : '' ?>>About</a></li>
-      <li><a href="contact.php" <?= basename($_SERVER['PHP_SELF']) === 'contact.php' ? 'class="active"' : '' ?>>Contact</a></li>
-      <li><a href="review.php" <?= basename($_SERVER['PHP_SELF']) === 'review.php' ? 'class="active"' : '' ?>>Reviews</a></li>
+      <li><a href="docs.php" <?= basename($_SERVER['PHP_SELF']) === 'docs.php' ? 'class="active"' : '' ?>>Docs</a></li>
       <?php if (isset($_SESSION['user_id'])): ?>
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
           <li><a href="admin/dashboard.php" <?= strpos($_SERVER['PHP_SELF'], 'admin/') !== false ? 'class="active"' : '' ?>>Admin</a></li>
