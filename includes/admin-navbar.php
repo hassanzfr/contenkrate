@@ -18,6 +18,20 @@ $current_banner = $theme_banners[$current_theme] ?? 'banner1';
     <div class="admin-nav-right">
       <nav class="admin-main-nav">
         <ul>
+
+
+         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+          <li class="theme-switcher-container">
+            <div class="theme-switcher">
+              <label for="themeSelect">Theme:</label>
+              <select id="themeSelect">
+                <option value="youtubered" <?= $current_theme === 'youtubered' ? 'selected' : '' ?>>Blue</option>
+                <option value="instapink" <?= $current_theme === 'instapink' ? 'selected' : '' ?>>Green</option>
+                <option value="tiktokcyan" <?= $current_theme === 'tiktokcyan' ? 'selected' : '' ?>>Pink</option>
+              </select>
+            </div>
+          </li>
+          <?php endif; ?>
           <li class="<?= basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'active' : '' ?>">
             <a href="dashboard.php">Dashboard</a>
           </li>
@@ -28,22 +42,7 @@ $current_banner = $theme_banners[$current_theme] ?? 'banner1';
             <a href="users.php">Users</a>
           </li>
 
-          <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-          <li class="theme-switcher-container">
-            <div class="theme-switcher">
-              <label for="themeSelect">Theme:</label>
-              <select id="themeSelect">
-                <option value="youtubered" <?= $current_theme === 'youtubered' ? 'selected' : '' ?>>Blue</option>
-                <option value="instapink" <?= $current_theme === 'instapink' ? 'selected' : '' ?>>Pink</option>
-                <option value="tiktokcyan" <?= $current_theme === 'tiktokcyan' ? 'selected' : '' ?>>Green</option>
-              </select>
-            </div>
-            <div class="banner-preview">
-              <img src="../assets/images/<?= $current_banner ?>.png" alt="Current Banner" class="banner-thumbnail">
-              <span>Current Banner</span>
-            </div>
-          </li>
-          <?php endif; ?>
+         
 
           <li>
             <a href="../products.php" target="_blank" class="storefront-btn">Storefront</a>
@@ -82,36 +81,79 @@ document.getElementById('themeSelect').addEventListener('change', function() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Update banner preview
+            // Update banner preview if exists
             const bannerMap = {
                 'youtubered': 'banner1',
                 'instapink': 'banner2',
                 'tiktokcyan': 'banner3'
             };
-            document.querySelector('.banner-thumbnail').src = `../assets/images/${bannerMap[selectedTheme]}.png?t=${new Date().getTime()}`;
+            const bannerThumbnail = document.querySelector('.banner-thumbnail');
+            if (bannerThumbnail) {
+                bannerThumbnail.src = `../assets/images/${bannerMap[selectedTheme]}.png?t=${new Date().getTime()}`;
+            }
             
-            // Force refresh the storefront
-            window.open('../index.php?force_refresh=1', '_blank');
-            
-            // Show notification
+            // Create and show notification
             const notification = document.createElement('div');
             notification.style.position = 'fixed';
             notification.style.top = '20px';
             notification.style.right = '20px';
-            notification.style.backgroundColor = '#4CAF50';
+            notification.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
             notification.style.color = 'white';
             notification.style.padding = '15px';
-            notification.style.borderRadius = '5px';
+            notification.style.borderRadius = '8px';
             notification.style.zIndex = '1000';
-            notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            notification.style.display = 'flex';
+            notification.style.flexDirection = 'column';
+            notification.style.gap = '10px';
+            notification.style.maxWidth = '300px';
+            notification.style.backdropFilter = 'blur(5px)';
+            notification.style.border = '1px solid rgba(255,255,255,0.1)';
+            notification.style.transform = 'translateX(100%)';
+            notification.style.transition = 'transform 0.3s ease-out';
+            
             notification.innerHTML = `
-                <p>Theme and banner changed to ${themeName}!</p>
+                <div style="font-weight: bold; font-size: 16px;">Theme Changed</div>
+                <div style="font-size: 14px;">${themeName} applied to Storefront</div>
+                <button style="
+                    background: rgba(255,255,255,0.2);
+                    color: white;
+                    border: none;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    margin-top: 5px;
+                    transition: background 0.2s;
+                " onclick="window.open('../index.php?force_refresh=1', '_blank')">
+                    View Storefront
+                </button>
             `;
+            
             document.body.appendChild(notification);
             
+            // Trigger the slide-in animation
             setTimeout(() => {
-                notification.remove();
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
             }, 5000);
+            
+            // Close on click outside
+            notification.addEventListener('click', (e) => {
+                if (e.target === notification) {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }
+            });
         }
     });
 });

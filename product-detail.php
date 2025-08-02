@@ -2,6 +2,8 @@
 session_start();
 require_once 'includes/database.php';
 require_once 'includes/functions.php';
+// Force refresh when theme changes
+$cache_buster = $_SESSION['theme_changed'] ?? time();
 
 // Validate & fetch product
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -36,8 +38,7 @@ foreach ($allowed_ext as $ext) {
 <head>
   <meta charset="UTF-8" />
   <title><?= htmlspecialchars($product['name']) ?> – Contenkrate</title>
-  <link rel="stylesheet" href="assets/css/youtubered-theme.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+ <link rel="stylesheet" href="assets/css/<?= $current_theme ?>-theme.css?v=<?= $cache_buster ?>">
 </head>
 <body>
 <?php include 'includes/navbar.php'; ?>

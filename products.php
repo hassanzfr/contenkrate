@@ -2,6 +2,9 @@
 session_start();
 require_once 'includes/database.php'; // $pdo PDO instance
 
+// Force refresh when theme changes
+$cache_buster = $_SESSION['theme_changed'] ?? time();
+
 // Initialize cart if not set
 if (!isset($_SESSION['cart_total'])) {
     $_SESSION['cart_total'] = 0.00;
@@ -77,8 +80,9 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
 <head>
   <meta charset="UTF-8" />
   <title>All Products - Contenkrate</title>
-  <link rel="stylesheet" href="assets/css/youtubered-theme.css" />
-  <link rel="stylesheet" href="assets/css/products.css" />
+
+  <link rel="stylesheet" href="assets/css/<?= $current_theme ?>-theme.css?v=<?= $cache_buster ?>">
+
 </head>
 <body class="products-page">
 <?php include 'includes/navbar.php'; ?>

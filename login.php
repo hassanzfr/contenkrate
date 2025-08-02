@@ -3,6 +3,7 @@ session_start();
 require 'includes/database.php';
 
 $errors = [];
+$cache_buster = $_SESSION['theme_changed'] ?? time();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // CSRF protection
@@ -49,7 +50,8 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <html>
 <head>
   <title>Login - Contenkrate</title>
-  <link rel="stylesheet" href="assets/css/youtubered-theme.css" />
+  <link rel="stylesheet" href="assets/css/<?= $current_theme ?>-theme.css?v=<?= $cache_buster ?>">
+
 </head>
 <body>
   <div class="auth-container">

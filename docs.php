@@ -1,5 +1,6 @@
 <?php
 // doc.php - Complete Documentation Page (Front-end & Back-end)
+// Force refresh when theme changes
 ?>
 <!DOCTYPE html>
 <html lang="en">

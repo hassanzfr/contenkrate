@@ -1,8 +1,24 @@
 <?php
 include 'includes/navbar.php';
-?>
-<link rel="stylesheet" href="assets/css/youtubered-theme.css">
 
+session_start();
+require_once 'includes/database.php'; // $pdo PDO instance
+
+// Force refresh when theme changes
+$cache_buster = $_SESSION['theme_changed'] ?? time();
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+
+  <link rel="stylesheet" href="assets/css/<?= $current_theme ?>-theme.css?v=<?= $cache_buster ?>">
+
+</head>
+<body>
 <!-- Inside your main container -->
 <main class="about-page-container">
   <div class="about-page-content">
@@ -36,7 +52,10 @@ include 'includes/navbar.php';
 
   </div>
 </main>
-
+</body>
 <?php
 include 'includes/footer.php';
 ?>
+
+</html>
+

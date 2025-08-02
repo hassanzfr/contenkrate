@@ -4,6 +4,8 @@ require_once 'includes/functions.php';
 
 session_start();
 redirect_if_not_logged_in();
+// Force refresh when theme changes
+$cache_buster = $_SESSION['theme_changed'] ?? time();
 
 $user_id = $_SESSION['user_id'];
 $wishlist_items = get_wishlist_items($user_id);
@@ -26,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_wishlist'])) {
 <head>
   <meta charset="UTF-8">
   <title>My Profile - Contenkrate</title>
-  <link rel="stylesheet" href="assets/css/youtubered-theme.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+ <link rel="stylesheet" href="assets/css/<?= $current_theme ?>-theme.css?v=<?= $cache_buster ?>">
 </head>
 <body>
 <?php include 'includes/navbar.php'; ?>
