@@ -39,16 +39,7 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
     </ul>
   </nav>
 
-  <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-    <div class="theme-switcher">
-      <label for="themeSelect" style="color: white; margin-right: 8px;">Theme:</label>
-      <select id="themeSelect" style="padding: 5px; border-radius: 4px;">
-        <option value="youtubered" <?= $current_theme === 'youtubered' ? 'selected' : '' ?>>YouTube Red</option>
-        <option value="instapink" <?= $current_theme === 'instapink' ? 'selected' : '' ?>>Instagram Pink</option>
-        <option value="tiktokcyan" <?= $current_theme === 'tiktokcyan' ? 'selected' : '' ?>>TikTok Cyan</option>
-      </select>
-    </div>
-  <?php endif; ?>
+
 </header>
 
 <script>

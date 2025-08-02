@@ -450,7 +450,7 @@
             <div class="header-content">
                 <div class="doc-title">
                     <h1>Contenkrate Documentation</h1>
-                    <p>Complete front-end and back-end documentation</p>
+                    <p>Complete front-end and back-end documentation, along admin inside back-end</p>
                 </div>
                 <nav class="tab-nav">
                     <button class="tab-btn active" onclick="switchTab('frontend')">Front-end</button>

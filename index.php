@@ -1,15 +1,17 @@
 <?php
 session_start();
 require_once 'includes/database.php';
+require_once 'includes/config.php';
+
+// Force refresh when theme changes
+$cache_buster = $_SESSION['theme_changed'] ?? time();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Contenkrate - Home</title>
-  <link rel="stylesheet" href="assets/css/youtubered-theme.css">
-  <link rel="stylesheet" href="assets/css/common.css">
-  <link rel="stylesheet" href="assets/css/home-products.css">
+  <link rel="stylesheet" href="assets/css/<?= $current_theme ?>-theme.css?v=<?= $cache_buster ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -17,11 +19,23 @@ require_once 'includes/database.php';
 
   <!-- Banner Section -->
   <section class="main-banner">
-    <img src="assets/images/banner.png" alt="Contenkrate Banner" class="banner-image">
+    <?php
+    // Get fresh theme from session
+    $current_theme = $_SESSION['current_theme'] ?? 'youtubered';
+    
+    // Map themes to banner versions
+    $theme_banners = [
+        'youtubered' => 'banner1',
+        'instapink' => 'banner2',
+        'tiktokcyan' => 'banner3'
+    ];
+    
+    $current_banner = $theme_banners[$current_theme] ?? 'banner1';
+    ?>
+    <img src="assets/images/<?= $current_banner ?>.png?v=<?= $cache_buster ?>" alt="Contenkrate Banner" class="banner-image">
     <div class="banner-content">
     </div>
   </section>
-
   <section class="home-products-section">
     <h2 class="home-products-title">Featured Products</h2>
     <div class="home-products-grid">

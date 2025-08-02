@@ -90,3 +90,21 @@ function get_site_analytics() {
         'recent_orders' => $pdo->query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC)
     ];
 }
+
+function showThemeChangeNotification() {
+    if (isset($_SESSION['theme_change_notification'])) {
+        $notification = $_SESSION['theme_change_notification'];
+        unset($_SESSION['theme_change_notification']);
+        
+        echo <<<HTML
+        <div id="theme-change-notification" style="position: fixed; top: 20px; right: 20px; background-color: #4CAF50; color: white; padding: 15px; border-radius: 5px; z-index: 1000; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p>Site theme has been updated to: {$notification['theme_name']}</p>
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('theme-change-notification').remove();
+            }, 5000);
+        </script>
+HTML;
+    }
+}
