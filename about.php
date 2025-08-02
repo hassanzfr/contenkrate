@@ -26,11 +26,11 @@ include 'includes/navbar.php';
     <section class="about-page-features">
       <h2 class="about-page-features-title">Our Features</h2>
       <ul class="about-page-features-list">
-        <li class="about-page-feature-item">🎯 Curated product recommendations for creators</li>
-        <li class="about-page-feature-item">💸 Setup guides based on platform and budget</li>
-        <li class="about-page-feature-item">🔍 Interactive tools and reviews to support smart purchases</li>
-        <li class="about-page-feature-item">🖼️ Multiple layout themes and responsive design</li>
-        <li class="about-page-feature-item">🛠️ Admin dashboard for content management and user control</li>
+        <li class="about-page-feature-item"> • Curated product recommendations for creators</li>
+        <li class="about-page-feature-item"> • Setup guides based on platform and budget</li>
+        <li class="about-page-feature-item"> • Interactive tools and reviews to support smart purchases</li>
+        <li class="about-page-feature-item"> • Multiple layout themes and responsive design</li>
+        <li class="about-page-feature-item"> • Admin dashboard for content management and user control</li>
       </ul>
     </section>
 

@@ -13,7 +13,7 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
 ?>
 <header>
   <h1 class="logotext">ContenKrate</h1>
-
+  <img src ="assets/images/logo.png" alt="ContenKrate Logo" class="logoNavbar">
   <!-- Mobile Menu Toggle Button -->
   <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
     <span></span>
@@ -25,9 +25,9 @@ $current_theme = $_SESSION['theme'] ?? 'youtubered';
     <ul>
       <li><a href="index.php" <?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'class="active"' : '' ?>>Home</a></li>
       <li><a href="products.php" <?= basename($_SERVER['PHP_SELF']) === 'products.php' ? 'class="active"' : '' ?>>Products</a></li>
+      <li><a href="calc.php" <?= basename($_SERVER['PHP_SELF']) === 'calc.php' ? 'class="active"' : '' ?>>Calculator</a></li>
       <li><a href="about.php" <?= basename($_SERVER['PHP_SELF']) === 'about.php' ? 'class="active"' : '' ?>>About</a></li>
-      <li><a href="docs.php" <?= basename($_SERVER['PHP_SELF']) === 'docs.php' ? 'class="active"' : '' ?>>Docs</a></li>
-      <?php if (isset($_SESSION['user_id'])): ?>
+      <li><a href="docs.php" target="_blank" <?= basename($_SERVER['PHP_SELF']) === 'docs.php' ? 'class="active"' : '' ?>>Docs</a></li><?php if (isset($_SESSION['user_id'])): ?>
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
           <li><a href="admin/dashboard.php" <?= strpos($_SERVER['PHP_SELF'], 'admin/') !== false ? 'class="active"' : '' ?>>Admin</a></li>
         <?php endif; ?>

@@ -58,8 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_wishlist'])) {
 
   <div class="tab-container">
     <div class="tab-buttons">
-      <button class="tab-button active" data-tab="wishlist">My Wishlist</button>
-      <button class="tab-button" data-tab="account">Account Settings</button>
     </div>
   </div>
 

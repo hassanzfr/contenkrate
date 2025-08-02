@@ -162,6 +162,13 @@ nav ul li a.active {
   color: var(--text-primary);
 }
 
+
+img.logoNavbar {
+    height: 40px;
+    margin-right: 7px;
+}
+
+
 /* Footer */
 footer {
   background-color: var(--bg-dark-secondary);
@@ -1816,16 +1823,16 @@ header.scrolled {
 
 /* Specific heading sizes */
 .about-page-title {
-  font-size: 2.8rem;
+  font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 0.6rem;
+  margin-top: 0.6rem;
 }
 
 .about-page-features-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  border-bottom: 2px solid var(--accent-red);
   padding-bottom: 0.4rem;
   max-width: fit-content;
   margin-left: 0;
@@ -1853,7 +1860,6 @@ header.scrolled {
 .about-page-feature-item {
   font-size: 1.1rem;
   padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border-dark);
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -1883,4 +1889,43 @@ header.scrolled {
   .about-page-features-list {
     max-width: 100%;
   }
+}
+
+/* Cart Total Header */
+.cart-total-header {
+  background-color: var(--bg-dark-secondary);
+  padding: 15px 30px;
+  margin: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-dark);
+  text-align: center;
+}
+
+.cart-total-header h2 {
+  margin: 0;
+  color: var(--accent-red);
+  font-size: 1.8rem;
+}
+
+/* Product Card Buttons */
+.product-card-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.products-btn-secondary {
+  display: inline-block;
+  background: var(--bg-dark-tertiary);
+  color: var(--text-primary);
+  padding: 8px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s;
+  border: 1px solid var(--border-dark);
+}
+
+.products-btn-secondary:hover {
+  background: var(--accent-green);
+  color: var(--text-primary);
 }

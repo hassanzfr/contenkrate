@@ -2,6 +2,27 @@
 session_start();
 require_once 'includes/database.php'; // $pdo PDO instance
 
+// Initialize cart total if not set
+if (!isset($_SESSION['cart_total'])) {
+    $_SESSION['cart_total'] = 0.00;
+    $_SESSION['cart_items'] = [];
+}
+
+// Handle adding items to cart
+if (isset($_GET['add_to_cart'])) {
+    $product_id = (int)$_GET['add_to_cart'];
+    
+    // Get product price from database
+    $stmt = $pdo->prepare("SELECT base_price FROM products WHERE id = ?");
+    $stmt->execute([$product_id]);
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($product) {
+        $_SESSION['cart_total'] += $product['base_price'];
+        $_SESSION['cart_items'][] = $product_id;
+    }
+}
+
 // --- Step 1: Get filter inputs safely ---
 $category = $_GET['category'] ?? '';
 $min_price = $_GET['min_price'] ?? '';
@@ -63,6 +84,10 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
 <?php include 'includes/navbar.php'; ?>
 
 <section class="product-listing">
+  <!-- Cart Total Header -->
+  <div class="cart-total-header">
+    <h2>Current Total: $<?= number_format($_SESSION['cart_total'], 2) ?> USD</h2>
+  </div>
 
   <!-- Filter Form -->
   <form method="GET" action="products.php" class="products-filter-form" aria-label="Product filters">
@@ -108,7 +133,10 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
           <h3><?= htmlspecialchars($product['name']) ?></h3>
           <p>Category: <?= htmlspecialchars($product['category']) ?></p>
           <p>From $<?= number_format($product['base_price'], 2) ?></p>
-          <a href="product-detail.php?id=<?= $product['id'] ?>" class="products-btn-primary">View</a>
+          <div class="product-card-buttons">
+            <a href="product-detail.php?id=<?= $product['id'] ?>" class="products-btn-primary">View</a>
+            <a href="products.php?add_to_cart=<?= $product['id'] ?>#cart-total" class="products-btn-secondary" onclick="scrollToTop()">Add (+$<?= number_format($product['base_price'], 2) ?>)</a>
+          </div>
         </div>
       <?php endforeach; ?>
     <?php else: ?>
@@ -118,5 +146,11 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
 </section>
 
 <?php include 'includes/footer.php'; ?>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
