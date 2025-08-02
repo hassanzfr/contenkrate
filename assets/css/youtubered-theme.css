@@ -1479,7 +1479,7 @@ header.scrolled {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border-dark);
-  margin: 60px 20px 0px 20px;
+  margin: 40px 20px 0px 20px;
   border-radius: 8px;
 }
 
@@ -1903,7 +1903,7 @@ header.scrolled {
 
 .cart-total-header h2 {
   margin: 0;
-  color: var(--accent-red);
+  color: var(white);
   font-size: 1.8rem;
 }
 
@@ -1914,18 +1914,21 @@ header.scrolled {
   margin-top: 15px;
 }
 
-.products-btn-secondary {
-  display: inline-block;
-  background: var(--bg-dark-tertiary);
-  color: var(--text-primary);
-  padding: 8px 15px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background 0.3s;
-  border: 1px solid var(--border-dark);
+.products-btn-primary {
+    display: inline-block;
+    background: #4384a600;
+    color: var(--text-primary);
+    padding: 6px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.3s;
+    border: 1px solid var(--border-dark);
+    margin-top: 10px;
+    text-align: center;
+    /* flex: 1; */
 }
 
-.products-btn-secondary:hover {
-  background: var(--accent-green);
+.products-btn-primary:hover {
+  background: var(--accent-red);
   color: var(--text-primary);
 }

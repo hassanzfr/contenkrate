@@ -2,7 +2,7 @@
 session_start();
 require_once 'includes/database.php'; // $pdo PDO instance
 
-// Initialize cart total if not set
+// Initialize cart if not set
 if (!isset($_SESSION['cart_total'])) {
     $_SESSION['cart_total'] = 0.00;
     $_SESSION['cart_items'] = [];
@@ -23,38 +23,38 @@ if (isset($_GET['add_to_cart'])) {
     }
 }
 
-// --- Step 1: Get filter inputs safely ---
+// Handle resetting cart
+if (isset($_GET['reset_cart'])) {
+    $_SESSION['cart_total'] = 0.00;
+    $_SESSION['cart_items'] = [];
+}
+
+// --- Filter inputs ---
 $category = $_GET['category'] ?? '';
 $min_price = $_GET['min_price'] ?? '';
 $max_price = $_GET['max_price'] ?? '';
 $search = $_GET['search'] ?? '';
 
-// --- Step 2: Valid categories ---
-$valid_categories = ['cameras', 'audio', 'lighting', 'software', 'accessories'];
-
-// --- Step 3: Build dynamic SQL with filters ---
+// --- Build SQL query ---
 $sql = "SELECT * FROM products WHERE 1=1";
 $params = [];
+$valid_categories = ['cameras', 'audio', 'lighting', 'software', 'accessories'];
 
-// Category filter
 if ($category !== '' && in_array($category, $valid_categories)) {
     $sql .= " AND category = :category";
     $params[':category'] = $category;
 }
 
-// Min price filter
 if (is_numeric($min_price)) {
     $sql .= " AND base_price >= :min_price";
     $params[':min_price'] = $min_price;
 }
 
-// Max price filter
 if (is_numeric($max_price)) {
     $sql .= " AND base_price <= :max_price";
     $params[':max_price'] = $max_price;
 }
 
-// Search keyword filter (case-insensitive)
 if ($search !== '') {
     $sql .= " AND name LIKE :search";
     $params[':search'] = "%" . $search . "%";
@@ -62,7 +62,7 @@ if ($search !== '') {
 
 $sql .= " ORDER BY created_at DESC";
 
-// --- Step 4: Prepare and execute query ---
+// Execute query
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -87,36 +87,41 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
   <!-- Cart Total Header -->
   <div class="cart-total-header">
     <h2>Current Total: $<?= number_format($_SESSION['cart_total'], 2) ?> USD</h2>
+    <a href="products.php?reset_cart=1" class="reset-cart-btn">Reset Total</a>
   </div>
 
   <!-- Filter Form -->
   <form method="GET" action="products.php" class="products-filter-form" aria-label="Product filters">
-    <label for="search">Search:</label>
-    <input type="text" id="search" name="search" placeholder="Search products..." value="<?= htmlspecialchars($search) ?>">
-
-    <label for="category">Category:</label>
-    <select id="category" name="category">
-      <option value="" <?= $category === '' ? 'selected' : '' ?>>All Categories</option>
-      <?php foreach ($valid_categories as $cat): ?>
-        <option value="<?= htmlspecialchars($cat) ?>" <?= $cat === $category ? 'selected' : '' ?>><?= ucfirst($cat) ?></option>
-      <?php endforeach; ?>
-    </select>
-
-    <label for="min_price">Min Price:</label>
-    <input type="number" id="min_price" name="min_price" min="0" step="0.01" placeholder="0.00" value="<?= htmlspecialchars($min_price) ?>">
-
-    <label for="max_price">Max Price:</label>
-    <input type="number" id="max_price" name="max_price" min="0" step="0.01" placeholder="10000" value="<?= htmlspecialchars($max_price) ?>">
-
-    <button type="submit">Filter</button>
+    <div class="filter-group search-group">
+      <input type="text" id="search" name="search" placeholder="Search products..." value="<?= htmlspecialchars($search) ?>">
+    </div>
+    
+    <div class="filter-group">
+      <select id="category" name="category">
+        <option value="">All Categories</option>
+        <?php foreach ($valid_categories as $cat): ?>
+          <option value="<?= htmlspecialchars($cat) ?>" <?= $cat === $category ? 'selected' : '' ?>><?= ucfirst($cat) ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+    
+    <div class="filter-group">
+      <input type="number" id="min_price" name="min_price" min="0" step="0.01" placeholder="Min Price" value="<?= htmlspecialchars($min_price) ?>">
+    </div>
+    
+    <div class="filter-group">
+      <input type="number" id="max_price" name="max_price" min="0" step="0.01" placeholder="Max Price" value="<?= htmlspecialchars($max_price) ?>">
+    </div>
+    
+    <div class="filter-group submit-group">
+      <button type="submit">Filter</button>
+    </div>
   </form>
 
   <div class="products-grid">
     <?php if (count($products) > 0): ?>
       <?php foreach ($products as $product):
-          // Find product image by ID
-          $image_path = 'assets/images/placeholder.png'; // default fallback
-          
+          $image_path = 'assets/images/placeholder.png';
           foreach ($allowed_extensions as $ext) {
               $potential_path = $image_dir . $product['id'] . '.' . $ext;
               if (file_exists($potential_path)) {
@@ -126,16 +131,13 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
           }
       ?>
         <div class="products-product-card">
-          <img src="<?= $image_path ?>" 
-               alt="<?= htmlspecialchars($product['name']) ?>"
-               width="800"
-               height="800">
+          <img src="<?= $image_path ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="800" height="800">
           <h3><?= htmlspecialchars($product['name']) ?></h3>
           <p>Category: <?= htmlspecialchars($product['category']) ?></p>
           <p>From $<?= number_format($product['base_price'], 2) ?></p>
           <div class="product-card-buttons">
             <a href="product-detail.php?id=<?= $product['id'] ?>" class="products-btn-primary">View</a>
-            <a href="products.php?add_to_cart=<?= $product['id'] ?>#cart-total" class="products-btn-secondary" onclick="scrollToTop()">Add (+$<?= number_format($product['base_price'], 2) ?>)</a>
+            <a href="products.php?add_to_cart=<?= $product['id'] ?>" class="products-btn-primary">Add (+$<?= number_format($product['base_price'], 2) ?>)</a>
           </div>
         </div>
       <?php endforeach; ?>
@@ -146,11 +148,5 @@ $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
 </section>
 
 <?php include 'includes/footer.php'; ?>
-
-<script>
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
 </body>
 </html>
