@@ -2,7 +2,7 @@
 session_start();
 require_once 'includes/database.php';
 require_once 'includes/config.php';
-
+require_once 'includes/seo.php';
 // Force refresh when theme changes
 $cache_buster = $_SESSION['theme_changed'] ?? time();
 ?>

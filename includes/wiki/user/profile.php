@@ -4,7 +4,7 @@
     
     <div class="video-container">
     <video controls poster="../assets/images/user-profile-help-poster.jpg">
-        <source src="../assets/videos/user-profile-help.mp4" type="video/mp4">
+        <source src="../contenkrate/assets/videos/user-profile-help.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     <p class="video-caption">Watch: Profile Management Guide</p>

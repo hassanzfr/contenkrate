@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'includes/database.php'; // $pdo PDO instance
-
+require_once 'includes/seo.php';
 // Force refresh when theme changes
 $cache_buster = $_SESSION['theme_changed'] ?? time();
 
