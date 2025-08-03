@@ -47,10 +47,11 @@ $current_banner = $theme_banners[$current_theme] ?? 'banner1';
           <li>
             <a href="../products.php" target="_blank" class="storefront-btn">Storefront</a>
           </li>
-
-          <li>
-            <a href="wiki.php">Help</a>
-          </li>
+<li>
+    <a href="/contenkrate/admin/help.php" class="help-btn">
+        <i class="fas fa-question-circle"></i> Help
+    </a>
+</li>
 
           <li>
             <a href="../docs.php">Docs</a>

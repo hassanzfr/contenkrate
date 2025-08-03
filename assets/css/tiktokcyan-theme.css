@@ -2209,3 +2209,135 @@ header.scrolled {
         font-size: 2rem;
     }
 }
+
+/* Video Container */
+.video-container {
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    max-width: 800px;
+}
+
+.video-container video {
+    width: 100%;
+    display: block;
+    background: #000;
+}
+
+.video-caption {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+/* Help Tables */
+.help-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.help-table th, .help-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.help-table th {
+    background: rgba(255,255,255,0.05);
+}
+
+/* Warning Box */
+.help-warning {
+    background: rgba(255,100,100,0.1);
+    border-left: 3px solid #ff6464;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.help-warning i {
+    margin-right: 10px;
+    color: #ff6464;
+}
+
+/* Admin Help Navigation Styles */
+.help-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.help-nav a {
+    position: relative;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-dark);
+}
+
+.help-nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.help-nav a.active {
+    background: var(--accent-one);
+    color: white;
+    border-color: var(--accent-one);
+    box-shadow: 0 4px 12px rgba(67, 132, 166, 0.3);
+}
+
+.help-nav a.active:hover {
+    background: var(--accent-two);
+    transform: none;
+}
+
+/* Optional icon styles */
+.help-nav a i {
+    font-size: 1rem;
+}
+
+/* Animation for active state */
+.help-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: white;
+    border-radius: 3px 3px 0 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .help-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .help-nav a {
+        justify-content: center;
+        padding: 0.75rem;
+    }
+    
+    .help-nav a.active::after {
+        display: none;
+    }
+}
